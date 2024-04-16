@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:quiz_app/constants.dart';
 import 'package:quiz_app/models/questions_model.dart';
 import 'package:quiz_app/screens/result_screen.dart';
-import 'package:quiz_app/widgets/answer_button.dart';
+import 'package:quiz_app/widgets/answer_button_widget.dart';
 import 'package:quiz_app/widgets/base_widget.dart';
-import 'package:quiz_app/widgets/progress_bar.dart';
-import 'package:quiz_app/widgets/questions_list.dart';
+import 'package:quiz_app/widgets/progress_bar_widget.dart';
+import 'package:quiz_app/widgets/questions_list_widget.dart';
 
 class HomePageScreen extends StatefulWidget {
   const HomePageScreen({super.key});
@@ -65,13 +65,13 @@ class _HomePageScreenState extends State<HomePageScreen>
               const SizedBox(
                 height: 20,
               ),
-              ProgressBar(
+              ProgressBarWidget(
                 animation: animation,
               ),
               const SizedBox(
                 height: 20,
               ),
-              QuestionsList(
+              QuestionsListWidget(
                 currentQuestionNumber: currentQuestionNumber,
                 statusList: statusList,
                 scrollController: scrollController,
@@ -100,7 +100,7 @@ class _HomePageScreenState extends State<HomePageScreen>
                       top: 10,
                       child: Text(
                         questionList[currentQuestionNumber]
-                            .questionNo
+                            .id
                             .toString(),
                         style: const TextStyle(
                           color: pColorGrayPalette,
@@ -137,7 +137,7 @@ class _HomePageScreenState extends State<HomePageScreen>
                   ],
                 ),
               ),
-              AnswerButton(
+              AnswerButtonWidget(
                 answer: questionList[currentQuestionNumber].firstAnswer,
                 number: 1,
                 isOnePressed: isOnePressed,
@@ -151,7 +151,7 @@ class _HomePageScreenState extends State<HomePageScreen>
               const SizedBox(
                 height: 10,
               ),
-              AnswerButton(
+              AnswerButtonWidget(
                 answer: questionList[currentQuestionNumber].secondAnswer,
                 number: 2,
                 isOnePressed: isOnePressed,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ResultButton extends StatelessWidget {
-  const ResultButton(
+class ResultButtonWidget extends StatelessWidget {
+  const ResultButtonWidget(
       {super.key,
       required this.text,
       required this.backgroundColor,

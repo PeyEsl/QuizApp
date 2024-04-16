@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/constants.dart';
 
-class AnswerButton extends StatelessWidget {
-  const AnswerButton({super.key, required this.answer, required this.number, required this.isOnePressed, required this.onPressed});
+class AnswerButtonWidget extends StatelessWidget {
+  const AnswerButtonWidget({super.key, required this.answer, required this.number, required this.isOnePressed, required this.onPressed});
 
   final String answer;
   final int number;

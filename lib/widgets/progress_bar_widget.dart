@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/constants.dart';
 
-class ProgressBar extends StatelessWidget {
-  const ProgressBar({super.key, required this.animation});
+class ProgressBarWidget extends StatelessWidget {
+  const ProgressBarWidget({super.key, required this.animation});
 
   final Animation animation;
 

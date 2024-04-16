@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/models/questions_model.dart';
-import 'package:quiz_app/widgets/question_number.dart';
+import 'package:quiz_app/widgets/question_number_widget.dart';
 
-class QuestionsList extends StatelessWidget {
-  const QuestionsList(
+class QuestionsListWidget extends StatelessWidget {
+  const QuestionsListWidget(
       {super.key,
       required this.currentQuestionNumber,
       required this.statusList,
@@ -17,7 +17,7 @@ class QuestionsList extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> list = [];
     for (int i = 0; i < questionList.length; i++) {
-      list.add(QuestionNumber(
+      list.add(QuestionNumberWidget(
         number: i + 1,
         currentQuestionNumber: currentQuestionNumber,
         statusList: statusList,

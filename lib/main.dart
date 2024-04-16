@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:quiz_app/models/questions_model.dart';
 import 'package:quiz_app/screens/splash_screen.dart';
 
-void main() {
+void main() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter(QuestionAdapter());
+  await Hive.openBox<Question>('question');
   runApp(Phoenix(child: const MyApp()));
 }
 

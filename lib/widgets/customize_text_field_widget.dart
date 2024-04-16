@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/constants.dart';
 
-class CustomizeTextField extends StatelessWidget {
-  const CustomizeTextField({super.key, required this.controller, required this.labelText});
+class CustomizeTextFieldWidget extends StatelessWidget {
+  const CustomizeTextFieldWidget({super.key, required this.controller, required this.labelText});
 
   final TextEditingController controller;
   final String labelText;

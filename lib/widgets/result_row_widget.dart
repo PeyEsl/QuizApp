@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ResultRow extends StatelessWidget {
-  const ResultRow({super.key, required this.point, required this.text, required this.icon, required this.color});
+class ResultRowWidget extends StatelessWidget {
+  const ResultRowWidget({super.key, required this.point, required this.text, required this.icon, required this.color});
 
   final String point;
   final String text;

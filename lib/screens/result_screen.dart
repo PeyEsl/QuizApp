@@ -5,8 +5,8 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:quiz_app/constants.dart';
 import 'package:quiz_app/screens/point_screen.dart';
 import 'package:quiz_app/widgets/base_widget.dart';
-import 'package:quiz_app/widgets/result_button.dart';
-import 'package:quiz_app/widgets/result_row.dart';
+import 'package:quiz_app/widgets/result_button_widget.dart';
+import 'package:quiz_app/widgets/result_row_widget.dart';
 import 'dart:io';
 
 class ResultScreen extends StatelessWidget {
@@ -97,7 +97,7 @@ class ResultScreen extends StatelessWidget {
                                     const SizedBox(
                                       height: 20,
                                     ),
-                                    ResultRow(
+                                    ResultRowWidget(
                                       point: resultList[0].toString(),
                                       text: 'جواب صحیح',
                                       icon: Icons.check_outlined,
@@ -106,7 +106,7 @@ class ResultScreen extends StatelessWidget {
                                     const SizedBox(
                                       height: 20,
                                     ),
-                                    ResultRow(
+                                    ResultRowWidget(
                                       point: resultList[1].toString(),
                                       text: 'جواب غلط',
                                       icon: Icons.clear,
@@ -115,7 +115,7 @@ class ResultScreen extends StatelessWidget {
                                     const SizedBox(
                                       height: 20,
                                     ),
-                                    ResultRow(
+                                    ResultRowWidget(
                                       point: resultList[2].toString(),
                                       text: 'بدون جواب',
                                       icon: Icons.crop_square_rounded,
@@ -144,14 +144,14 @@ class ResultScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ResultButton(
+                  ResultButtonWidget(
                       text: 'از نو',
                       backgroundColor: pColorGreenLight,
                       foregroundColor: pColorGreeneDarker,
                       onPressed: () {
                         onPlayAgainPressed(context);
                       }),
-                  ResultButton(
+                  ResultButtonWidget(
                       text: 'نتیجه',
                       backgroundColor: pColorGreeneDarker,
                       foregroundColor: pColorGrayPalette,

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/constants.dart';
+import 'package:quiz_app/screens/add_question_screen.dart';
 import 'package:quiz_app/screens/home_page_screen.dart';
+import 'package:quiz_app/screens/question_list_screen.dart';
 import 'package:quiz_app/widgets/base_widget.dart';
-import 'package:quiz_app/widgets/customize_text_field.dart';
+import 'package:quiz_app/widgets/customize_text_field_widget.dart';
+import 'package:quiz_app/widgets/question_widget.dart';
 
 class RegisterPlayerScreen extends StatelessWidget {
   RegisterPlayerScreen({super.key});
@@ -31,22 +34,28 @@ class RegisterPlayerScreen extends StatelessWidget {
                   image: AssetImage('assets/images/artanLogo.png'),
                 ),
                 const Spacer(),
-                CustomizeTextField(controller: nameController, labelText: 'Name',),
-                CustomizeTextField(controller: familyController, labelText: 'Family',),
+                CustomizeTextFieldWidget(
+                  controller: nameController,
+                  labelText: 'Name',
+                ),
+                CustomizeTextFieldWidget(
+                  controller: familyController,
+                  labelText: 'Family',
+                ),
                 const Spacer(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-                      decoration: BoxDecoration(
-                        color: pColorGreeneDarker,
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.settings, color: pColorGrayPalette, size: 30, ),
-                      ),
+                    QuestionWidget(
+                      icon: Icons.list_alt_rounded,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const QuestionListScreen(),
+                          ),
+                        );
+                      },
                     ),
                     ElevatedButton(
                       style: ButtonStyle(
@@ -75,16 +84,16 @@ class RegisterPlayerScreen extends StatelessWidget {
                         child: Text('شروع'),
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-                      decoration: BoxDecoration(
-                        color: pColorGreeneDarker,
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.settings, color: pColorGrayPalette, size: 30, ),
-                      ),
+                    QuestionWidget(
+                      icon: Icons.add_circle_rounded,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const AddQuestionScreen(),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:quiz_app/constants.dart';
 import 'package:quiz_app/models/questions_model.dart';
 
-class QuestionNumber extends StatelessWidget {
-  const QuestionNumber({super.key, required this.number, required this.currentQuestionNumber, required this.statusList});
+class QuestionNumberWidget extends StatelessWidget {
+  const QuestionNumberWidget({super.key, required this.number, required this.currentQuestionNumber, required this.statusList});
 
   final int number;
   final int currentQuestionNumber;
