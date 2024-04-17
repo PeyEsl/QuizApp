@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quiz_app/constants.dart';
 
 class BaseWidget extends StatelessWidget {
-  const BaseWidget({super.key, required this.body, required this.appBar});
+  const BaseWidget({super.key, required this.appBar, required this.body});
 
   final Widget body;
   final PreferredSizeWidget? appBar;

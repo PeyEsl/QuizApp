@@ -160,7 +160,7 @@ class ResultScreen extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const PointScreen(),
+                            builder: (context) => PointScreen(),
                           ),
                         );
                       }),

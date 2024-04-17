@@ -43,7 +43,7 @@ class AnswerButtonWidget extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  answer == 'بله' ? '1' : '2',
+                  number == 1 ? '1' : '2',
                   style: const TextStyle(
                     color: Colors.black,
                   ),

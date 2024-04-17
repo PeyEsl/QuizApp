@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:quiz_app/constants.dart';
 import 'package:quiz_app/models/questions_model.dart';
 import 'package:quiz_app/screens/result_screen.dart';
@@ -30,7 +31,7 @@ class _HomePageScreenState extends State<HomePageScreen>
     // TODO: implement initState
     super.initState();
 
-    for (int i = 0; i < questionList.length; i++) {
+    for (int i = 0; i < Hive.box<Question>('question').length; i++) {
       statusList.add(0);
     }
 
@@ -100,8 +101,10 @@ class _HomePageScreenState extends State<HomePageScreen>
                     Positioned(
                       top: 10,
                       child: Text(
-                        questionList[currentQuestionNumber]
-                            .id
+                        ((Hive.box<Question>('question')
+                                    .getAt(currentQuestionNumber)!
+                                    .id) +
+                                1)
                             .toString(),
                         style: const TextStyle(
                           color: pColorGrayPalette,
@@ -123,7 +126,9 @@ class _HomePageScreenState extends State<HomePageScreen>
                         ),
                         child: Center(
                           child: Text(
-                            questionList[currentQuestionNumber].question,
+                            Hive.box<Question>('question')
+                                .getAt(currentQuestionNumber)!
+                                .question,
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                               color: pColorGrayPalette,
@@ -139,28 +144,26 @@ class _HomePageScreenState extends State<HomePageScreen>
                 ),
               ),
               AnswerButtonWidget(
-                answer: questionList[currentQuestionNumber].firstAnswer,
+                answer: Hive.box<Question>('question')
+                    .getAt(currentQuestionNumber)!
+                    .firstAnswer,
                 number: 1,
                 isOnePressed: isOnePressed,
                 onPressed: () {
-                  answerPressed(
-                    questionList[currentQuestionNumber].firstAnswer,
-                    1,
-                  );
+                  answerPressed(1);
                 },
               ),
               const SizedBox(
                 height: 10,
               ),
               AnswerButtonWidget(
-                answer: questionList[currentQuestionNumber].secondAnswer,
+                answer: Hive.box<Question>('question')
+                    .getAt(currentQuestionNumber)!
+                    .secondAnswer,
                 number: 2,
                 isOnePressed: isOnePressed,
                 onPressed: () {
-                  answerPressed(
-                    questionList[currentQuestionNumber].secondAnswer,
-                    2,
-                  );
+                  answerPressed(2);
                 },
               ),
               const Spacer(),
@@ -248,7 +251,7 @@ class _HomePageScreenState extends State<HomePageScreen>
       controller.reset();
       controller.forward();
     }
-    if (currentQuestionNumber < questionList.length - 1) {
+    if (currentQuestionNumber < Hive.box<Question>('question').length - 1) {
       currentQuestionNumber++;
       setState(() {});
     } else {
@@ -258,7 +261,9 @@ class _HomePageScreenState extends State<HomePageScreen>
 
   checkAnswer() {
     int playerAnswer = isOnePressed ? 1 : 2;
-    bool status = questionList[currentQuestionNumber].isTrue(playerAnswer);
+    bool status = Hive.box<Question>('question')
+        .getAt(currentQuestionNumber)!
+        .isTrue(playerAnswer);
     statusList[currentQuestionNumber] = status;
   }
 
@@ -292,12 +297,12 @@ class _HomePageScreenState extends State<HomePageScreen>
     );
   }
 
-  answerPressed(String answer, int number) {
-    if (answer == 'بله' && number == 1) {
+  answerPressed(int number) {
+    if (number == 1) {
       setState(() {
         isOnePressed = true;
       });
-    } else if (answer == 'خیر' && number == 2) {
+    } else if (number == 2) {
       setState(() {
         isOnePressed = false;
       });

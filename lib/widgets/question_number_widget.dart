@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:quiz_app/constants.dart';
 import 'package:quiz_app/models/questions_model.dart';
 
@@ -13,7 +14,7 @@ class QuestionNumberWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Color color = pColorGreeneDarker;
     int temp = number - 1;
-    int questionListSize = questionList.length;
+    int questionListSize = Hive.box<Question>('question').length;
     if (temp == currentQuestionNumber) {
       if (temp == questionListSize - 1 && statusList[temp] != 0) {
         if (statusList[temp] == true) {

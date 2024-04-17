@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:quiz_app/constants.dart';
+import 'package:quiz_app/models/questions_model.dart';
 import 'package:quiz_app/screens/add_question_screen.dart';
 import 'package:quiz_app/screens/home_page_screen.dart';
 import 'package:quiz_app/screens/question_list_screen.dart';
@@ -75,16 +77,24 @@ class RegisterPlayerScreen extends StatelessWidget {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const HomePageScreen(),
-                              ));
+                          Hive.box<Question>('question').length <= 0
+                              ? Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => AddQuestionScreen(),
+                                  ),
+                                )
+                              : Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const HomePageScreen(),
+                                  ));
                         },
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
                               horizontal: 40.0, vertical: 8.0),
-                          child: Text('شروع'),
+                          child: Text(Hive.box<Question>('question').length <= 0 ? 'ثبت' : 'شروع'),
                         ),
                       ),
                       QuestionWidget(
