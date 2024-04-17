@@ -30,6 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
     return BaseWidget(
+      appBar: null,
       body: Center(
         child: Column(
           children: [

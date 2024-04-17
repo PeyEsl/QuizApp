@@ -25,6 +25,7 @@ class ResultScreen extends StatelessWidget {
       status = 'Loser';
     }
     return BaseWidget(
+      appBar: null,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),

@@ -57,6 +57,7 @@ class _HomePageScreenState extends State<HomePageScreen>
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
     return BaseWidget(
+      appBar: null,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),

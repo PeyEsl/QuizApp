@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:quiz_app/constants.dart';
 
 class CustomizeTextFieldWidget extends StatelessWidget {
-  const CustomizeTextFieldWidget({super.key, required this.controller, required this.labelText});
+  const CustomizeTextFieldWidget(
+      {super.key, required this.controller, required this.labelText});
 
   final TextEditingController controller;
   final String labelText;
@@ -12,11 +13,15 @@ class CustomizeTextFieldWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
+        cursorColor: pColorGrayPalette,
         controller: controller,
         decoration: InputDecoration(
           labelText: labelText,
           labelStyle: const TextStyle(
             color: pColorGrayPalette,
+            fontSize: 18,
+            fontFamily: 'IRANSans',
+            fontWeight: FontWeight.bold,
           ),
           fillColor: pColorGrayPalette,
           focusedBorder: OutlineInputBorder(
@@ -33,6 +38,12 @@ class CustomizeTextFieldWidget extends StatelessWidget {
               width: 2.0,
             ),
           ),
+        ),
+        style: const TextStyle(
+          color: pColorGrayPalette,
+          fontSize: 18,
+          fontFamily: 'IRANSans',
+          fontWeight: FontWeight.bold,
         ),
       ),
     );

@@ -19,88 +19,92 @@ class RegisterPlayerScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
     return BaseWidget(
+      appBar: null,
       body: Center(
         child: SingleChildScrollView(
           child: SizedBox(
             height: size.height,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: size.height * 0.2,
-                ),
-                const Image(
-                  height: 200,
-                  width: 200,
-                  image: AssetImage('assets/images/artanLogo.png'),
-                ),
-                const Spacer(),
-                CustomizeTextFieldWidget(
-                  controller: nameController,
-                  labelText: 'Name',
-                ),
-                CustomizeTextFieldWidget(
-                  controller: familyController,
-                  labelText: 'Family',
-                ),
-                const Spacer(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    QuestionWidget(
-                      icon: Icons.list_alt_rounded,
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const QuestionListScreen(),
-                          ),
-                        );
-                      },
-                    ),
-                    ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(pColorGreeneDarker),
-                        foregroundColor:
-                            MaterialStateProperty.all(pColorGrayPalette),
-                        textStyle: MaterialStateProperty.all(
-                          const TextStyle(
-                            fontSize: 30,
-                            fontFamily: 'IRANSans',
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.push(
+            child: Directionality(
+              textDirection: TextDirection.rtl,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: size.height * 0.2,
+                  ),
+                  const Image(
+                    height: 200,
+                    width: 200,
+                    image: AssetImage('assets/images/artanLogo.png'),
+                  ),
+                  const Spacer(),
+                  CustomizeTextFieldWidget(
+                    controller: nameController,
+                    labelText: 'نام',
+                  ),
+                  CustomizeTextFieldWidget(
+                    controller: familyController,
+                    labelText: 'نام‌خانوادگی',
+                  ),
+                  const Spacer(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      QuestionWidget(
+                        icon: Icons.add_circle_rounded,
+                        onPressed: () {
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const HomePageScreen(),
-                            ));
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 40.0, vertical: 8.0),
-                        child: Text('شروع'),
+                              builder: (context) => AddQuestionScreen(),
+                            ),
+                          );
+                        },
                       ),
-                    ),
-                    QuestionWidget(
-                      icon: Icons.add_circle_rounded,
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const AddQuestionScreen(),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(pColorGreeneDarker),
+                          foregroundColor:
+                              MaterialStateProperty.all(pColorGrayPalette),
+                          textStyle: MaterialStateProperty.all(
+                            const TextStyle(
+                              fontSize: 30,
+                              fontFamily: 'IRANSans',
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-              ],
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const HomePageScreen(),
+                              ));
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 40.0, vertical: 8.0),
+                          child: Text('شروع'),
+                        ),
+                      ),
+                      QuestionWidget(
+                        icon: Icons.list_alt_rounded,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => QuestionListScreen(),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
