@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:quiz_app/constants.dart';
+import 'package:quiz_app/methods/player_crud.dart';
+import 'package:quiz_app/models/player_model.dart';
 import 'package:quiz_app/models/questions_model.dart';
 import 'package:quiz_app/screens/add_question_screen.dart';
 import 'package:quiz_app/screens/home_page_screen.dart';
@@ -15,7 +19,11 @@ class RegisterPlayerScreen extends StatelessWidget {
   TextEditingController nameController = TextEditingController();
   TextEditingController familyController = TextEditingController();
 
+  FocusNode nameFocus = FocusNode();
+
   late Size size;
+
+  late int playerId;
 
   @override
   Widget build(BuildContext context) {
@@ -42,10 +50,12 @@ class RegisterPlayerScreen extends StatelessWidget {
                   CustomizeTextFieldWidget(
                     controller: nameController,
                     labelText: 'نام',
+                    focusNode: nameFocus,
                   ),
                   CustomizeTextFieldWidget(
                     controller: familyController,
                     labelText: 'نام‌خانوادگی',
+                    focusNode: null,
                   ),
                   const Spacer(),
                   Row(
@@ -77,24 +87,72 @@ class RegisterPlayerScreen extends StatelessWidget {
                           ),
                         ),
                         onPressed: () {
-                          Hive.box<Question>('question').length <= 0
-                              ? Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => AddQuestionScreen(),
+                          if (Hive.box<Question>('question').length <= 0) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AddQuestionScreen(),
+                              ),
+                            );
+                          } else {
+                            if (nameController.text == '' ||
+                                familyController.text == '') {
+                              nameFocus.requestFocus();
+                            } else {
+                              if (Hive.box<Player>('player').length <= 0) {
+                                CRUDPlayer.createPlayer(
+                                  Player(
+                                    0,
+                                    nameController.text,
+                                    familyController.text,
                                   ),
-                                )
-                              : Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const HomePageScreen(),
-                                  ));
+                                ).then((playerData) {
+                                  playerId = playerData.id;
+                                });
+                                nameController.clear();
+                                familyController.clear();
+                              } else {
+                                bool findPlayer = false;
+                                for (var item
+                                    in Hive.box<Player>('player').values) {
+                                  if (item.name == nameController.text &&
+                                      item.family == familyController.text) {
+                                    playerId = item.id;
+                                    findPlayer = true;
+                                    break;
+                                  }
+                                }
+                                if (findPlayer == false) {
+                                  CRUDPlayer.createPlayer(
+                                    Player(
+                                      0,
+                                      nameController.text,
+                                      familyController.text,
+                                    ),
+                                  ).then((playerData) {
+                                    playerId = playerData.id;
+                                  });
+                                  nameController.clear();
+                                  familyController.clear();
+                                }
+                              }
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => HomePageScreen(
+                                    playerId: playerId,
+                                  ),
+                                ),
+                              );
+                            }
+                          }
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 40.0, vertical: 8.0),
-                          child: Text(Hive.box<Question>('question').length <= 0 ? 'ثبت' : 'شروع'),
+                          child: Text(Hive.box<Question>('question').length <= 0
+                              ? 'ثبت'
+                              : 'شروع'),
                         ),
                       ),
                       QuestionWidget(

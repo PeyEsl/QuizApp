@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:quiz_app/constants.dart';
+import 'package:quiz_app/models/grader_model.dart';
 import 'package:quiz_app/screens/point_screen.dart';
 import 'package:quiz_app/widgets/base_widget.dart';
 import 'package:quiz_app/widgets/result_button_widget.dart';
@@ -10,169 +11,188 @@ import 'package:quiz_app/widgets/result_row_widget.dart';
 import 'dart:io';
 
 class ResultScreen extends StatelessWidget {
-  ResultScreen({super.key, required this.resultList});
+  ResultScreen({super.key, required this.playerId, required this.graderList});
 
   late Size size;
-  final List<int> resultList;
+  final Future<Grader> graderList;
+  final int playerId;
   String status = '';
 
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
-    if (resultList[0] > resultList[1]) {
-      status = 'Winner';
-    } else {
-      status = 'Loser';
-    }
-    return BaseWidget(
-      appBar: null,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            children: [
-              Container(
+    return FutureBuilder<Grader>(
+      future: graderList,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          Grader graderData = snapshot.data!;
+          String status = '';
+          if (graderData.rightAnswer > graderData.wrongAnswer) {
+            status = 'Winner';
+          } else {
+            status = 'Loser';
+          }
+          return BaseWidget(
+            appBar: null,
+            body: SafeArea(
+              child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      status == 'Winner' ? pColorGreenLight : pColorFalseAnswer,
-                      pColorGrayPalette,
-                    ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.center,
-                  ),
-                  borderRadius: const BorderRadius.vertical(
-                    bottom: Radius.circular(50),
-                  ),
-                ),
                 child: Column(
                   children: [
-                    const SizedBox(
-                      height: 80,
-                    ),
-                    SizedBox(
-                      height: size.height - 210,
-                      child: Stack(
-                        alignment: Alignment.center,
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            status == 'Winner'
+                                ? pColorGreenLight
+                                : pColorFalseAnswer,
+                            pColorGrayPalette,
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.center,
+                        ),
+                        borderRadius: const BorderRadius.vertical(
+                          bottom: Radius.circular(50),
+                        ),
+                      ),
+                      child: Column(
                         children: [
-                          Positioned(
-                            top: 102,
-                            child: Container(
-                              width: size.width - 80,
-                              decoration: const BoxDecoration(
-                                color: pColorGrayPalette,
-                                borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(30),
-                                  bottom: Radius.circular(30),
-                                ),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(20.0),
-                                child: Column(
-                                  children: [
-                                    const SizedBox(
-                                      height: 60,
-                                    ),
-                                    Text(
-                                      'شما ${status == 'Winner' ? 'برنده' : 'بازنده'} شدید',
-                                      style: TextStyle(
-                                        color: status == 'Winner'
-                                            ? pColorGreeneDarker
-                                            : pColorFalseAnswer,
-                                        fontSize: 60,
-                                        fontFamily: 'IRANSans',
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    const SizedBox(
-                                      height: 15,
-                                    ),
-                                    const Divider(
-                                      thickness: 4,
-                                      color: pColorGreeneDarker,
-                                      indent: 50,
-                                      endIndent: 50,
-                                    ),
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-                                    ResultRowWidget(
-                                      point: resultList[0].toString(),
-                                      text: 'جواب صحیح',
-                                      icon: Icons.check_outlined,
-                                      color: pColorTrueAnswer,
-                                    ),
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-                                    ResultRowWidget(
-                                      point: resultList[1].toString(),
-                                      text: 'جواب غلط',
-                                      icon: Icons.clear,
-                                      color: pColorFalseAnswer,
-                                    ),
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-                                    ResultRowWidget(
-                                      point: resultList[2].toString(),
-                                      text: 'بدون جواب',
-                                      icon: Icons.crop_square_rounded,
-                                      color: Colors.grey,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                          const SizedBox(
+                            height: 80,
                           ),
-                          Positioned(
-                            top: 0,
-                            child: Image.asset(
-                              'assets/images/${status == 'Winner' ? 'youWin.png' : 'youLose.png'}',
-                              width: size.width - 100,
+                          SizedBox(
+                            height: size.height - 210,
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Positioned(
+                                  top: 102,
+                                  child: Container(
+                                    width: size.width - 80,
+                                    decoration: const BoxDecoration(
+                                      color: pColorGrayPalette,
+                                      borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(30),
+                                        bottom: Radius.circular(30),
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(20.0),
+                                      child: Column(
+                                        children: [
+                                          const SizedBox(
+                                            height: 60,
+                                          ),
+                                          Text(
+                                            'شما ${status == 'Winner' ? 'برنده' : 'بازنده'} شدید',
+                                            style: TextStyle(
+                                              color: status == 'Winner'
+                                                  ? pColorGreeneDarker
+                                                  : pColorFalseAnswer,
+                                              fontSize: 60,
+                                              fontFamily: 'IRANSans',
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          const SizedBox(
+                                            height: 15,
+                                          ),
+                                          const Divider(
+                                            thickness: 4,
+                                            color: pColorGreeneDarker,
+                                            indent: 50,
+                                            endIndent: 50,
+                                          ),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
+                                          ResultRowWidget(
+                                            point: graderData.rightAnswer
+                                                .toString(),
+                                            text: 'جواب صحیح',
+                                            icon: Icons.check_outlined,
+                                            color: pColorTrueAnswer,
+                                          ),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
+                                          ResultRowWidget(
+                                            point: graderData.wrongAnswer
+                                                .toString(),
+                                            text: 'جواب غلط',
+                                            icon: Icons.clear,
+                                            color: pColorFalseAnswer,
+                                          ),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
+                                          ResultRowWidget(
+                                            point: graderData.whiteAnswer
+                                                .toString(),
+                                            text: 'بدون جواب',
+                                            icon: Icons.crop_square_rounded,
+                                            color: Colors.grey,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  top: 0,
+                                  child: Image.asset(
+                                    'assets/images/${status == 'Winner' ? 'youWin.png' : 'youLose.png'}',
+                                    width: size.width - 100,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
                       ),
                     ),
+                    const Spacer(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ResultButtonWidget(
+                            text: 'از نو',
+                            backgroundColor: pColorGreenLight,
+                            foregroundColor: pColorGreeneDarker,
+                            onPressed: () {
+                              onPlayAgainPressed(context);
+                            }),
+                        ResultButtonWidget(
+                          text: 'نتیجه',
+                          backgroundColor: pColorGreeneDarker,
+                          foregroundColor: pColorGrayPalette,
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PointScreen(),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
                   ],
                 ),
               ),
-              const Spacer(),
-              // const Spacer(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ResultButtonWidget(
-                      text: 'از نو',
-                      backgroundColor: pColorGreenLight,
-                      foregroundColor: pColorGreeneDarker,
-                      onPressed: () {
-                        onPlayAgainPressed(context);
-                      }),
-                  ResultButtonWidget(
-                      text: 'نتیجه',
-                      backgroundColor: pColorGreeneDarker,
-                      foregroundColor: pColorGrayPalette,
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => PointScreen(),
-                          ),
-                        );
-                      }),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-            ],
-          ),
-        ),
-      ),
+            ),
+          );
+        }
+      },
     );
   }
 

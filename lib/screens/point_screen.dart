@@ -1,6 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:quiz_app/constants.dart';
+import 'package:quiz_app/models/grader_model.dart';
+import 'package:quiz_app/models/player_model.dart';
 import 'package:quiz_app/widgets/base_widget.dart';
 import 'package:quiz_app/widgets/point_row_widget.dart';
 
@@ -8,6 +10,7 @@ class PointScreen extends StatelessWidget {
   PointScreen({super.key});
 
   late Size size;
+  var grader = Hive.box<Grader>('grader').values;
 
   @override
   Widget build(BuildContext context) {
@@ -104,23 +107,30 @@ class PointScreen extends StatelessWidget {
                         const SizedBox(
                           height: 25,
                         ),
-                        const PointRowWidget(
-                          gradientColor: pColorTrueAnswer,
-                          player: 'پیمان اسلامی',
-                          rightAnswer: 6,
-                          wrongAnswer: 1,
-                          whiteAnswer: 3,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        const PointRowWidget(
-                          gradientColor: pColorFalseAnswer,
-                          player: 'حسن کاظمی',
-                          rightAnswer: 3,
-                          wrongAnswer: 5,
-                          whiteAnswer: 2,
-                        ),
+                        for (var item in grader)
+                          Column(
+                            children: [
+                              PointRowWidget(
+                                gradientColor:
+                                    item.rightAnswer > item.wrongAnswer
+                                        ? pColorTrueAnswer
+                                        : pColorFalseAnswer,
+                                player: Hive.box<Player>('player')
+                                        .getAt(item.playerId)!
+                                        .name +
+                                    ' ' +
+                                    Hive.box<Player>('player')
+                                        .getAt(item.playerId)!
+                                        .family,
+                                rightAnswer: item.rightAnswer,
+                                wrongAnswer: item.wrongAnswer,
+                                whiteAnswer: item.whiteAnswer,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                            ],
+                          ),
                       ],
                     ),
                   ),

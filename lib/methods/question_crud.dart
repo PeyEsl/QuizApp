@@ -3,21 +3,16 @@ import 'package:hive/hive.dart';
 
 class CRUDQuestion{
   static Future<Question> createQuestion(Question question) async {
-    var box = Hive.box<Question>('question');
-    int index = await box.add(question);
+    var boxQuestion = Hive.box<Question>('question');
+    int index = await boxQuestion.add(question);
     question.id = index;
     question.save();
     return question;
   }
 
-  static Future<List<Question>> readAllQuestion() async {
-    var box = Hive.box<Question>('question');
-    return box.values.toList();
-  }
-
   static Future<bool> deleteQuestion(int id) async {
-    var box = Hive.box<Question>('question');
-    await box.deleteAt(id);
+    var boxQuestion = Hive.box<Question>('question');
+    await boxQuestion.deleteAt(id);
     return true;
   }
 }

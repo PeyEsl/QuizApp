@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:quiz_app/constants.dart';
+import 'package:quiz_app/methods/grader_crud.dart';
+import 'package:quiz_app/models/grader_model.dart';
 import 'package:quiz_app/models/questions_model.dart';
 import 'package:quiz_app/screens/result_screen.dart';
 import 'package:quiz_app/widgets/answer_button_widget.dart';
@@ -9,7 +11,9 @@ import 'package:quiz_app/widgets/progress_bar_widget.dart';
 import 'package:quiz_app/widgets/questions_list_widget.dart';
 
 class HomePageScreen extends StatefulWidget {
-  const HomePageScreen({super.key});
+  const HomePageScreen({super.key, required this.playerId});
+
+  final int playerId;
 
   @override
   State<HomePageScreen> createState() => _HomePageScreenState();
@@ -286,13 +290,20 @@ class _HomePageScreenState extends State<HomePageScreen>
   appNavigator() {
     controller.reset();
     controller.dispose();
-    List<int> resultList = grader();
+    var graderResult = CRUDGrader.createGrader(
+      Grader(
+        0,
+        widget.playerId,
+        grader()[0],
+        grader()[1],
+        grader()[2],
+      ),
+    );
+
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ResultScreen(
-          resultList: resultList,
-        ),
+        builder: (context) => ResultScreen(playerId: widget.playerId, graderList: graderResult,),
       ),
     );
   }

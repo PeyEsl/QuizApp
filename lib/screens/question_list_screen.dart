@@ -36,12 +36,12 @@ class QuestionListScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 Question questions = value.values.toList()[index];
                 return ListTile(
-                  title: Text(questions.question),
+                  title: Text(questions.question.toString()),
                   titleTextStyle: const TextStyle(
                     fontFamily: 'IRANSans',
                     color: pColorGrayPalette,
                   ),
-                  subtitle: Text('جواب صحیح: ${questions.trueAnswer}'),
+                  subtitle: Text('جواب صحیح: ${questions.trueAnswer.toString()}'),
                   subtitleTextStyle: const TextStyle(
                     fontFamily: 'IRANSans',
                     color: pColorGrayPalette,

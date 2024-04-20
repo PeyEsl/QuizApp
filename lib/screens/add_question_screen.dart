@@ -40,18 +40,22 @@ class AddQuestionScreen extends StatelessWidget {
                     CustomizeTextFieldWidget(
                       controller: questionController,
                       labelText: 'متن سؤال',
+                      focusNode: null,
                     ),
                     CustomizeTextFieldWidget(
                       controller: firstAnswerController,
                       labelText: 'جواب اول',
+                      focusNode: null,
                     ),
                     CustomizeTextFieldWidget(
                       controller: secondAnswerController,
                       labelText: 'جواب دوم',
+                      focusNode: null,
                     ),
                     CustomizeTextFieldWidget(
                       controller: trueAnswerController,
                       labelText: 'جواب درست',
+                      focusNode: null,
                     ),
                     const SizedBox(
                       height: 22,

@@ -3,9 +3,10 @@ import 'package:quiz_app/constants.dart';
 
 class CustomizeTextFieldWidget extends StatelessWidget {
   const CustomizeTextFieldWidget(
-      {super.key, required this.controller, required this.labelText});
+      {super.key, required this.controller, required this.labelText, required this.focusNode});
 
   final TextEditingController controller;
+  final FocusNode? focusNode;
   final String labelText;
 
   @override
@@ -14,6 +15,7 @@ class CustomizeTextFieldWidget extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
         cursorColor: pColorGrayPalette,
+        focusNode: focusNode,
         controller: controller,
         decoration: InputDecoration(
           labelText: labelText,
