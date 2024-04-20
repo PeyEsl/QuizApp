@@ -23,7 +23,7 @@ class BaseWidget extends StatelessWidget {
       child: Scaffold(
         appBar: appBar,
         backgroundColor: Colors.transparent,
-        body: body,
+        body:  body,
       ),
     );
   }

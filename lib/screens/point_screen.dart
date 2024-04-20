@@ -17,35 +17,35 @@ class PointScreen extends StatelessWidget {
     size = MediaQuery.of(context).size;
     return BaseWidget(
       appBar: null,
-      body: SingleChildScrollView(
-        child: SizedBox(
-          height: size.height,
-          child: Directionality(
-            textDirection: TextDirection.rtl,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20.0,
-              ),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: size.height * 0.06,
+      body: SizedBox(
+        height: size.height,
+        child: Directionality(
+          textDirection: TextDirection.rtl,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20.0,
+            ),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: size.height * 0.06,
+                ),
+                Center(
+                  child: Image.asset(
+                    'assets/images/scoreBoard.png',
+                    height: 200,
                   ),
-                  Center(
-                    child: Image.asset(
-                      'assets/images/scoreBoard.png',
-                      height: 200,
+                ),
+                const Spacer(),
+                Container(
+                  height: size.height * 0.67,
+                  decoration: const BoxDecoration(
+                    color: pColorGrayPalette,
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(50),
                     ),
                   ),
-                  const Spacer(),
-                  Container(
-                    height: size.height * 0.67,
-                    decoration: const BoxDecoration(
-                      color: pColorGrayPalette,
-                      borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(50),
-                      ),
-                    ),
+                  child: SingleChildScrollView(
                     child: Column(
                       children: [
                         Container(
@@ -134,8 +134,8 @@ class PointScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
