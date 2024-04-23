@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:quiz_app/constants.dart';
 
 class CustomizeTextFieldWidget extends StatelessWidget {
-  const CustomizeTextFieldWidget(
-      {super.key, required this.controller, required this.labelText, required this.focusNode});
+  const CustomizeTextFieldWidget({
+    super.key,
+    required this.controller,
+    required this.labelText,
+    required this.focusNode,
+  });
 
   final TextEditingController controller;
   final FocusNode? focusNode;

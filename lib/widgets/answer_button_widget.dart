@@ -2,7 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:quiz_app/constants.dart';
 
 class AnswerButtonWidget extends StatelessWidget {
-  const AnswerButtonWidget({super.key, required this.answer, required this.number, required this.isOnePressed, required this.onPressed});
+  const AnswerButtonWidget({
+    super.key,
+    required this.answer,
+    required this.number,
+    required this.isOnePressed,
+    required this.onPressed,
+  });
 
   final String answer;
   final int number;
@@ -52,7 +58,7 @@ class AnswerButtonWidget extends StatelessWidget {
             ),
             Padding(
               padding:
-              const EdgeInsets.symmetric(horizontal: 40.0, vertical: 15.0),
+                  const EdgeInsets.symmetric(horizontal: 40.0, vertical: 15.0),
               child: Text(answer),
             ),
           ],

@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:quiz_app/constants.dart';
 
 class BaseWidget extends StatelessWidget {
-  const BaseWidget({super.key, required this.appBar, required this.body});
+  const BaseWidget({
+    super.key,
+    required this.appBar,
+    required this.body,
+  });
 
   final Widget body;
   final PreferredSizeWidget? appBar;
@@ -23,7 +27,7 @@ class BaseWidget extends StatelessWidget {
       child: Scaffold(
         appBar: appBar,
         backgroundColor: Colors.transparent,
-        body:  body,
+        body: body,
       ),
     );
   }

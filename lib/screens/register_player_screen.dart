@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:quiz_app/constants.dart';
@@ -23,7 +21,7 @@ class RegisterPlayerScreen extends StatelessWidget {
 
   late Size size;
 
-  late int playerId;
+  int? playerId;
 
   @override
   Widget build(BuildContext context) {
@@ -109,8 +107,6 @@ class RegisterPlayerScreen extends StatelessWidget {
                                 ).then((playerData) {
                                   playerId = playerData.id;
                                 });
-                                nameController.clear();
-                                familyController.clear();
                               } else {
                                 bool findPlayer = false;
                                 for (var item
@@ -132,20 +128,22 @@ class RegisterPlayerScreen extends StatelessWidget {
                                   ).then((playerData) {
                                     playerId = playerData.id;
                                   });
-                                  nameController.clear();
-                                  familyController.clear();
                                 }
                               }
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => HomePageScreen(
-                                    playerId: playerId,
+                              if (playerId != null) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => HomePageScreen(
+                                      playerId: playerId!,
+                                    ),
                                   ),
-                                ),
-                              );
+                                );
+                              }
                             }
                           }
+                          nameController.clear();
+                          familyController.clear();
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
