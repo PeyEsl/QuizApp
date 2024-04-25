@@ -142,8 +142,6 @@ class RegisterPlayerScreen extends StatelessWidget {
                               }
                             }
                           }
-                          nameController.clear();
-                          familyController.clear();
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(

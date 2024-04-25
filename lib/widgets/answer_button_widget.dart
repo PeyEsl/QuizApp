@@ -58,7 +58,7 @@ class AnswerButtonWidget extends StatelessWidget {
             ),
             Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 40.0, vertical: 15.0),
+                  const EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
               child: Text(answer),
             ),
           ],
